@@ -13,7 +13,6 @@ The dataset is provided in Parquet and compressed JSONL formats. These files con
 
 ```text
 src/isfallacy/          Python package and CLI
-tests/                  Unit tests
 data/                   The dataset in Parquet and compressed JSONL formats
 ```
 
