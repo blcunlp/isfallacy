@@ -1,6 +1,16 @@
 # ISFallacy and FATE
 
-This repository contains the reproducible data-preparation and evaluation code for **ISFallacy**, a Chinese benchmark for evaluating whether language models notice fallacious reasoning in interactive scenarios. It also implements the two-stage **FATE** (Fallacy Awareness Test Framework) protocol.
+<p align="center">
+  <img src="assets/figure1_interactive_fallacy.png" alt="Example contrasting explicit fallacy classification with an interactive dialogue where the model remains vulnerable" width="720">
+</p>
+
+<p align="center"><em>Excerpt from Figure 1 in <a href="https://aclanthology.org/2026.acl-long.59/">Niu et al., ACL 2026</a>.</em></p>
+
+## Abstract
+
+Large language models can identify fallacies when asked directly, yet may fail to recognize or resist them in natural interactions. **ISFallacy** is a Chinese benchmark for evaluating fallacy awareness across six fallacy types, five social interaction settings, five relationship conditions, and eight personality traits. **FATE** evaluates models in two stages: a natural response to an interactive scenario, followed by a behavior question when the first response does not show awareness. The framework assesses whether responses identify the fallacy, classify its type, or explain how its faulty reasoning appears in context.
+
+This repository contains the ISFallacy dataset and code for running the two-stage FATE evaluation.
 
 ## What is released
 
