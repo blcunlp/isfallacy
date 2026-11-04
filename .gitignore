@@ -1,0 +1,13 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.~*
+outputs/
+data/processed/*.parquet
+data/processed/*.jsonl
+data/processed/*.jsonl.gz
+data/processed/*.csv
+
