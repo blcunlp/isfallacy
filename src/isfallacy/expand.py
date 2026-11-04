@@ -2,16 +2,9 @@
 
 from __future__ import annotations
 
-import hashlib
-
 import pandas as pd
 
 from .constants import PERSONALITIES, RELATIONSHIPS
-
-
-def _fingerprint(row: pd.Series) -> str:
-    payload = "\u241f".join(str(row[name]) for name in row.index)
-    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def prepare_base(frame: pd.DataFrame) -> pd.DataFrame:
@@ -19,7 +12,6 @@ def prepare_base(frame: pd.DataFrame) -> pd.DataFrame:
     result.insert(0, "base_id", [f"isfallacy-base-{i:06d}" for i in range(1, len(result) + 1)])
     result["language"] = "zh"
     result["source_row"] = range(2, len(result) + 2)
-    result["base_fingerprint"] = result.apply(_fingerprint, axis=1)
     result["split"] = "test"
     result["record_kind"] = "foundational_scenario"
     return result

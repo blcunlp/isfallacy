@@ -82,7 +82,6 @@ Important fields in the dataset:
 | `role_relationship` | One of five relationship conditions |
 | `personality_trait` | One of eight personality conditions |
 | `conditioning_instruction_zh` | Runtime relationship and personality instruction |
-| `base_fingerprint` | SHA-256 fingerprint for provenance checks |
 
 ## Data formats
 
