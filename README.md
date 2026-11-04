@@ -144,7 +144,22 @@ data/isfallacy.jsonl.gz
 
 Legacy scripts previously embedded a credential. It has been removed from the working tree. Treat any credential that ever appeared in source code as compromised: revoke it at the provider, create a replacement, and use environment variables or a secret manager.
 
-## License and citation
+## Citation
 
-Add the dataset license, code license, paper citation, author list, and repository URLs before public release. Do not publish until the authors have confirmed that the selected licenses cover the generated data and code dependencies.
+If you use ISFallacy or the FATE evaluation framework, please cite the paper:
+
+```bibtex
+@inproceedings{niu-etal-2026-beyond,
+    title = "Beyond Detection: Evaluating Fallacy Awareness of {LLM}s in Interactive Scenarios",
+    author = "Niu, Conghui and Wu, Ningxin and Zhao, Ziran and Yu, Dong and Kang, Chen and Liu, Pengyuan",
+    booktitle = "Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    pages = "1331--1352",
+    year = "2026",
+    publisher = "Association for Computational Linguistics",
+    doi = "10.18653/v1/2026.acl-long.59",
+    url = "https://aclanthology.org/2026.acl-long.59/"
+}
+```
+
+Paper: [ACL Anthology](https://aclanthology.org/2026.acl-long.59/). Add the approved code and dataset licenses before redistributing this repository or its data.
 

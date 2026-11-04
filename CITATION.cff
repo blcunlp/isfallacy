@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use ISFallacy or FATE, please cite this paper."
+title: "Beyond Detection: Evaluating Fallacy Awareness of LLMs in Interactive Scenarios"
+type: conference-paper
+authors:
+  - family-names: Niu
+    given-names: Conghui
+  - family-names: Wu
+    given-names: Ningxin
+  - family-names: Zhao
+    given-names: Ziran
+  - family-names: Yu
+    given-names: Dong
+  - family-names: Kang
+    given-names: Chen
+  - family-names: Liu
+    given-names: Pengyuan
+year: 2026
+doi: 10.18653/v1/2026.acl-long.59
+url: https://aclanthology.org/2026.acl-long.59/
