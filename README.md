@@ -4,10 +4,10 @@ This repository contains the reproducible data-preparation and evaluation code f
 
 ## What is released
 
-- One dataset with 50,400 evaluation configurations, created from 1,260 foundational scenarios crossed with five role relationships and eight personality traits (`1,260 × 5 × 8`).
+- The complete ISFallacy dataset with 50,400 records across six fallacy types, five social interaction settings, five role relationships, and eight personality traits.
 - A checkpointed two-stage evaluation runner for any OpenAI-compatible endpoint.
 
-The dataset is provided in Parquet and compressed JSONL formats. These files contain the same records; they are not separate training and test splits. Each record retains its `base_id` and relationship and personality conditioning instructions. The foundational 1,260-row dataset is not included in this repository.
+The dataset is provided in Parquet and compressed JSONL formats. These files contain the same complete dataset; they are not separate training and test splits. Each record includes relationship and personality conditioning information.
 
 ## Repository layout
 
@@ -16,7 +16,7 @@ src/isfallacy/          Python package and CLI
 data/                   The dataset in Parquet and compressed JSONL formats
 ```
 
-The published repository includes the 50,400-row dataset. The foundational source workbook is not included. To regenerate the data, provide the source workbook locally and follow the preparation commands below.
+The repository contains the complete 50,400-row dataset.
 
 ## Installation
 
@@ -28,44 +28,7 @@ source .venv/bin/activate
 python -m pip install -e .
 ```
 
-For development:
-
-```bash
-python -m pip install -e '.[dev]'
-pytest
-```
-
-## Prepare or validate the dataset
-
-The public dataset is already available under `data/`. The preparation commands below require the original source workbook, which is not included in this repository.
-
-Normalize the source workbook into the public schema:
-
-```bash
-isfallacy prepare \
-  --input dataset_model.xlsx \
-  --sheet 总 \
-  --output data/processed/isfallacy_base.parquet
-```
-
-Create all 50,400 conditioned configurations:
-
-```bash
-isfallacy expand \
-  --input dataset_model.xlsx \
-  --sheet 总 \
-  --output data/processed/isfallacy_expanded.parquet
-```
-
-Create the JSONL companion file by changing the output suffix:
-
-```bash
-isfallacy expand \
-  --input dataset_model.xlsx \
-  --output data/processed/isfallacy_expanded.jsonl
-```
-
-Validate a release file:
+## Validate the dataset
 
 ```bash
 isfallacy validate --input data/isfallacy.parquet
@@ -109,7 +72,7 @@ Important fields in the dataset:
 | Field | Meaning |
 | --- | --- |
 | `id` | Unique conditioned-record ID |
-| `base_id` | ID of the foundational scenario |
+| `base_id` | Identifier linking records from the same scenario group |
 | `scene` | Original Chinese scene and dialogue |
 | `fallacy_type` | One of six annotated fallacy types |
 | `fallacy_analysis` | Scene-specific fallacy explanation |
@@ -121,24 +84,9 @@ Important fields in the dataset:
 | `conditioning_instruction_zh` | Runtime relationship and personality instruction |
 | `base_fingerprint` | SHA-256 fingerprint for provenance checks |
 
-## Recommended Hugging Face files
+## Data formats
 
-Parquet and compressed JSONL are two serializations of the same 50,400 records. Parquet preserves column types and supports fast column selection. JSONL is convenient for streaming and inspection. The uncompressed JSONL is about 101 MB, so it is gzip-compressed to fit comfortably within GitHub's per-file size limit. CSV is not included because long, multiline Chinese scenes are less convenient to handle in it.
-
-Suggested files:
-
-```text
-README.md
-data/isfallacy.parquet
-data/isfallacy.jsonl.gz
-```
-
-## Reproducibility and release notes
-
-- The paper describes “30 contextual variants per instance,” but the stated design and total require **40** (`5 relationships × 8 traits`). This implementation follows the factors and the reported total of 50,400.
-- The source workbook contains 29 distinct topic labels, although the paper reports 30 topics. One label, `文化交流`, occurs twice as often as the others and may represent a collapsed or duplicated topic label. Resolve this provenance issue before claiming exact 30-topic coverage in the dataset card.
-- The 1,260 base scenes contain no duplicate `scene` values and no missing required source fields.
-- Do not describe the 50,400 configurations as independently annotated texts. They are 1,260 foundational scenes evaluated under 40 controlled social/personality configurations.
+Parquet and compressed JSONL are two serializations of the same 50,400 records. Parquet preserves column types and supports fast column selection. JSONL is convenient for streaming and inspection. The uncompressed JSONL is about 101 MB, so it is gzip-compressed to fit comfortably within GitHub's per-file size limit.
 
 ## Security
 
