@@ -1,10 +1,4 @@
-# ISFallacy and FATE
-
-<p align="center">
-  <img src="assets/figure1_interactive_fallacy.png" alt="Example contrasting explicit fallacy classification with an interactive dialogue where the model remains vulnerable" width="720">
-</p>
-
-<p align="center"><em>Excerpt from Figure 1 in <a href="https://aclanthology.org/2026.acl-long.59/">Niu et al., ACL 2026</a>.</em></p>
+# Beyond Detection: Evaluating Fallacy Awareness of LLMs in Interactive Scenarios
 
 ## Abstract
 
