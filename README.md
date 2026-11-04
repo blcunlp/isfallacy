@@ -4,20 +4,20 @@ This repository contains the reproducible data-preparation and evaluation code f
 
 ## What is released
 
-- `expanded`: 50,400 evaluation configurations created from every base scenario with five role relationships and eight personality traits (`1,260 × 5 × 8`).
+- One dataset with 50,400 evaluation configurations, created from 1,260 foundational scenarios crossed with five role relationships and eight personality traits (`1,260 × 5 × 8`).
 - A checkpointed two-stage evaluation runner for any OpenAI-compatible endpoint.
 
-The expanded release combines every foundational scenario with the complete relationship and personality grid. Each expanded record retains its `base_id` and conditioning instructions. The foundational dataset is not included in this repository.
+The dataset is provided in Parquet and compressed JSONL formats. These files contain the same records; they are not separate training and test splits. Each record retains its `base_id` and relationship and personality conditioning instructions. The foundational 1,260-row dataset is not included in this repository.
 
 ## Repository layout
 
 ```text
 src/isfallacy/          Python package and CLI
 tests/                  Unit tests
-data/expanded/          Published 50,400-row evaluation configurations
+data/                   The dataset in Parquet and compressed JSONL formats
 ```
 
-The published repository includes the expanded dataset. The 1,260-row base workbook is not included. To regenerate the expansion from the paper's source data, provide the authorized source workbook locally and follow the preparation commands below.
+The published repository includes the 50,400-row dataset. The foundational source workbook is not included. To regenerate the data, provide the source workbook locally and follow the preparation commands below.
 
 ## Installation
 
@@ -38,7 +38,7 @@ pytest
 
 ## Prepare or validate the dataset
 
-The public expanded dataset is already available under `data/expanded/`. The preparation commands below require the original source workbook, which is not included in this repository.
+The public dataset is already available under `data/`. The preparation commands below require the original source workbook, which is not included in this repository.
 
 Normalize the source workbook into the public schema:
 
@@ -69,7 +69,7 @@ isfallacy expand \
 Validate a release file:
 
 ```bash
-isfallacy validate --input data/processed/isfallacy_expanded.parquet
+isfallacy validate --input data/isfallacy.parquet
 ```
 
 ## Run FATE
@@ -85,7 +85,7 @@ Run a small smoke test first:
 
 ```bash
 isfallacy run \
-  --input data/expanded/isfallacy_expanded.jsonl.gz \
+  --input data/isfallacy.jsonl.gz \
   --output outputs/smoke.jsonl \
   --target-model TARGET_MODEL \
   --judge-model JUDGE_MODEL \
@@ -105,7 +105,7 @@ A response is aware if any of the three criteria is true. Raw judge output is re
 
 ## Data schema
 
-Important fields in the expanded split:
+Important fields in the dataset:
 
 | Field | Meaning |
 | --- | --- |
@@ -124,15 +124,14 @@ Important fields in the expanded split:
 
 ## Recommended Hugging Face files
 
-Use Parquet as the canonical format because it preserves types, compresses repeated long text well, supports fast column selection, and works with the Hugging Face dataset viewer. Also publish `jsonl.gz` for transparent streaming and debugging. Avoid CSV as the primary format because scenes contain long, multiline Chinese text and commas; CSV is larger and more fragile across tools. In the generated release, expanded Parquet is under 1 MB while uncompressed expanded JSONL is about 100 MB; gzip reduces the JSONL to about 2.2 MB.
+Parquet and compressed JSONL are two serializations of the same 50,400 records. Parquet preserves column types and supports fast column selection. JSONL is convenient for streaming and inspection. The uncompressed JSONL is about 101 MB, so it is gzip-compressed to fit comfortably within GitHub's per-file size limit. CSV is not included because long, multiline Chinese scenes are less convenient to handle in it.
 
 Suggested files:
 
 ```text
 README.md
-data/base/test-00000-of-00001.parquet
-data/expanded/test-00000-of-00001.parquet
-data/expanded/isfallacy_expanded.jsonl.gz
+data/isfallacy.parquet
+data/isfallacy.jsonl.gz
 ```
 
 ## Reproducibility and release notes
@@ -140,7 +139,7 @@ data/expanded/isfallacy_expanded.jsonl.gz
 - The paper describes “30 contextual variants per instance,” but the stated design and total require **40** (`5 relationships × 8 traits`). This implementation follows the factors and the reported total of 50,400.
 - The source workbook contains 29 distinct topic labels, although the paper reports 30 topics. One label, `文化交流`, occurs twice as often as the others and may represent a collapsed or duplicated topic label. Resolve this provenance issue before claiming exact 30-topic coverage in the dataset card.
 - The 1,260 base scenes contain no duplicate `scene` values and no missing required source fields.
-- Do not describe the conditioned split as 50,400 independently annotated texts. Describe it as 1,260 foundational scenes evaluated under 40 controlled social/personality configurations.
+- Do not describe the 50,400 configurations as independently annotated texts. They are 1,260 foundational scenes evaluated under 40 controlled social/personality configurations.
 
 ## Security
 
